@@ -44,7 +44,7 @@ app.use(limiter);
 (async () => {
   try {
     app.use("/api/v1", v1Routes);
-    
+
     app.listen(PORT, () => {
       console.log(`Server running: http://localhost:${PORT}`);
     });
@@ -56,3 +56,16 @@ app.use(limiter);
     }
   }
 })();
+
+const handleServerShutdown = async () => {
+  try {
+    console.log("Server SHUTDOWN");
+    process.exit(0);
+  } catch (error) {
+    console.log("Error during server shutdown: ", error);
+  }
+};
+
+// Gracefully handle server shutdown on termination signals
+process.on("SIGTERM", handleServerShutdown);
+process.on("SIGINT", handleServerShutdown);
