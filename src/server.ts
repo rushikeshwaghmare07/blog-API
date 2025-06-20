@@ -7,6 +7,8 @@ import helmet from "helmet";
 import config from "@/config";
 import limiter from "@/lib/express_rate_limit";
 
+import v1Routes from "@/routes/v1";
+
 import type { CorsOptions } from "cors";
 
 const app = express();
@@ -41,6 +43,8 @@ app.use(limiter);
 
 (async () => {
   try {
+    app.use("/api/v1", v1Routes);
+    
     app.listen(PORT, () => {
       console.log(`Server running: http://localhost:${PORT}`);
     });
