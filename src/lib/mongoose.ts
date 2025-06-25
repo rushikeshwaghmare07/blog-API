@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
+
 import config from "@/config";
+import { logger } from "@/lib/winston"
 
 import type { ConnectOptions } from "mongoose";
 
@@ -24,16 +26,16 @@ export const connectToDatabase = async (): Promise<void> => {
     const dbHost = connection.connection.host;
     const dbName = connection.connection.name;
 
-    console.log(`Connected to MongoDB at host: ${dbHost}, database: ${dbName}`);
+    logger.info(`Connected to MongoDB at host: ${dbHost}, database: ${dbName}`);
 
     if (config.NODE_ENV === "development") {
-      console.log("MongoDB client options:", {
+      logger.info("MongoDB client options:", {
        options: clientOptions
       });
     }
   } catch (error) {
     const err = error instanceof Error ? error : new Error(String(error));
-    console.error("Error connecting to the database", err);
+    logger.error("Error connecting to the database", err);
     throw err;
   }
 };
@@ -42,10 +44,10 @@ export const disconnectFromDatabase = async (): Promise<void> => {
   try {
     await mongoose.disconnect();
 
-    console.log("Disconnected from MongoDB successfully.");
+    logger.info("Disconnected from MongoDB successfully.");
   } catch (error) {
     const err = error instanceof Error ? error : new Error(String(error));
-    console.error("Error disconnecting from the MongoDB", err);
+    logger.error("Error disconnecting from the MongoDB", err);
     throw err;
   }
 };
