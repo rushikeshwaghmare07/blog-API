@@ -18,10 +18,13 @@ if (config.NODE_ENV !== "production") {
             ? `\n${JSON.stringify(meta)}`
             : "";
 
-          return `${timestamp} [${level.toLowerCase()}]: ${message}${metaStr}`;
+          return `${timestamp} [${level}]: ${message}${metaStr}`;
         }),
       ),
     }),
+
+    new winston.transports.File({ filename: "error.log", level: "error" }),
+    new winston.transports.File({ filename: "combined.log" }),
   );
 }
 
