@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { body } from "express-validator";
+import { body, cookie } from "express-validator";
 import bcrypt from "bcrypt";
 
 import register from "@/controller/v1/auth/register";
 import login from "@/controller/v1/auth/login";
+import refreshToken from "@/controller/v1/auth/refresh_token";
 
 import User from "@/models/user";
 
@@ -82,6 +83,17 @@ router.post(
     }),
   validationError,
   login,
+);
+
+router.post(
+  "/refresh-token",
+  cookie("refreshToken")
+  .notEmpty()
+  .withMessage("Refresh token required")
+  .isJWT()
+  .withMessage("Invalid refresh token"),
+  validationError,
+  refreshToken
 );
 
 export default router;
