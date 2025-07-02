@@ -3,6 +3,7 @@ import { param, body, query } from "express-validator";
 
 import getCurrentUser from "@/controller/v1/user/get_current_user";
 import updateCurrentUser from "@/controller/v1/user/update_current_user";
+import deleteCurrentUser from "@/controller/v1/user/delete_current_user";
 
 import authenticate from "@/middlewares/authenticate";
 import validationError from "@/middlewares/validationError";
@@ -51,7 +52,9 @@ router.put(
     .isLength({ max: 8 })
     .withMessage("Password must be less than 8 characters")
     .isStrongPassword()
-    .withMessage("Password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, one number, and one special character."),
+    .withMessage(
+      "Password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, one number, and one special character.",
+    ),
   body("first_name")
     .optional()
     .isLength({ max: 20 })
@@ -68,6 +71,13 @@ router.put(
     .withMessage("Url must be less than 100 characters"),
   validationError,
   updateCurrentUser,
+);
+
+router.delete(
+  "/current",
+  authenticate,
+  authorize(["admin", "user"]),
+  deleteCurrentUser,
 );
 
 export default router;
