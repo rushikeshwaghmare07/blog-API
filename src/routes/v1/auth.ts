@@ -5,10 +5,12 @@ import bcrypt from "bcrypt";
 import register from "@/controller/v1/auth/register";
 import login from "@/controller/v1/auth/login";
 import refreshToken from "@/controller/v1/auth/refresh_token";
+import logout from "@/controller/v1/auth/logout";
 
 import User from "@/models/user";
 
 import validationError from "@/middlewares/validationError";
+import authenticate from "@/middlewares/authenticate";
 
 const router = Router();
 
@@ -95,5 +97,7 @@ router.post(
   validationError,
   refreshToken
 );
+
+router.post("/logout", authenticate, logout);
 
 export default router;
