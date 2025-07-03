@@ -19,6 +19,8 @@ const config = {
   ACCESS_TOKEN_EXPIRY: requireEnv("ACCESS_TOKEN_EXPIRY") as ms.StringValue,
   REFRESH_TOKEN_EXPIRY: requireEnv("REFRESH_TOKEN_EXPIRY") as ms.StringValue,
   WHITELIST_ADMINS_MAIL: process.env.WHITELIST_ADMINS_MAIL,
+  defaultResLimit: 20,
+  defaultResOffset: 0,
 };
 
 export default config;
