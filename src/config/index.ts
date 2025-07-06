@@ -21,6 +21,9 @@ const config = {
   WHITELIST_ADMINS_MAIL: process.env.WHITELIST_ADMINS_MAIL,
   defaultResLimit: 20,
   defaultResOffset: 0,
+  CLOUDINARY_CLOUD_NAME:requireEnv("CLOUDINARY_CLOUD_NAME"),
+  CLOUDINARY_API_KEY:requireEnv("CLOUDINARY_API_KEY"),
+  CLOUDINARY_API_SECRET:requireEnv("CLOUDINARY_API_SECRET"),
 };
 
 export default config;
