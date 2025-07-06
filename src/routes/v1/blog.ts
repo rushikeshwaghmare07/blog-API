@@ -4,6 +4,7 @@ import multer from "multer";
 
 import createBlog from "@/controller/v1/blog/create_blog";
 import getAllBlogs from "@/controller/v1/blog/get_all_blogs";
+import getBlogsByUser from "@/controller/v1/blog/get_blogs_by_user";
 
 import authenticate from "@/middlewares/authenticate";
 import authorize from "@/middlewares/authorize";
@@ -48,6 +49,23 @@ router.get(
     .withMessage("Offset must be a positive integer"),
   validationError,
   getAllBlogs,
+);
+
+router.get(
+  "/user/:userId",
+  authenticate,
+  authorize(["admin", "user"]),
+  param("userId").isMongoId().withMessage("Invalid user Id"),
+  query("limit")
+    .optional()
+    .isInt({ min: 1, max: 50 })
+    .withMessage("Limit must be between 1 to 50"),
+  query("offset")
+    .optional()
+    .isInt({ min: 0 })
+    .withMessage("Offset must be a positive integer"),
+  validationError,
+  getBlogsByUser,
 );
 
 export default router;
