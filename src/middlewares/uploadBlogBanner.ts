@@ -37,7 +37,7 @@ const uploadBlogBanner = (method: "post" | "put") => {
 
       const data = await uploadToCloudinary(
         req.file.buffer,
-        // blog?.banner.publicId.replace("blog-api/", "")
+        blog?.banner.publicId.replace("blog-api/", "")
       );
 
       if (!data) {
@@ -47,8 +47,8 @@ const uploadBlogBanner = (method: "post" | "put") => {
         });
 
         logger.error("Error while uploading blog banner", {
-          // blogId,
-          // publicId: blog?.banner.publicId
+          blogId,
+          publicId: blog?.banner.publicId
         });
         return;
       }
@@ -61,7 +61,7 @@ const uploadBlogBanner = (method: "post" | "put") => {
       };
 
       logger.info("BLog banner uploaded to cloudinary", {
-        // blogId,
+        blogId,
         banner: newBanner,
       });
 
