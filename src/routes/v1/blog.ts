@@ -7,6 +7,7 @@ import getAllBlogs from "@/controller/v1/blog/get_all_blogs";
 import getBlogsByUser from "@/controller/v1/blog/get_blogs_by_user";
 import getBlogBySlug from "@/controller/v1/blog/get_glob_by_slug";
 import updateBlog from "@/controller/v1/blog/update_blog";
+import deleteBlog from "@/controller/v1/blog/delete_blog";
 
 import authenticate from "@/middlewares/authenticate";
 import authorize from "@/middlewares/authorize";
@@ -99,5 +100,7 @@ router.put(
   uploadBlogBanner("put"),
   updateBlog,
 );
+
+router.delete("/:blogId", authenticate, authorize(["admin"]), deleteBlog);
 
 export default router;
